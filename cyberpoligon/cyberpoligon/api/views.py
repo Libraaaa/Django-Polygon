@@ -1,6 +1,8 @@
 import hashlib
 import json
+import time
 import uuid
+from datetime import datetime
 
 from django.conf import settings
 from django.core.files.storage import default_storage
@@ -77,7 +79,8 @@ def submit_view(request):
 
         # Сохранение JSON данных в файл
         try:
-            with open("received_data.json", "w") as f:
+            current_time = datetime.now().strftime("%Y%m%d-%H%M%S")
+            with open(f"{current_time}.json", "w") as f:
                 json.dump(data, f, indent=4)
         except Exception as e:
             return JsonResponse(
